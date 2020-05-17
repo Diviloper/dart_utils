@@ -26,15 +26,15 @@ void main() {
     });
 
     test('returns an empty iterator if "from" equals "to"', () {
-        expect(range(to: 0), Iterable.empty());
+      expect(range(to: 0), Iterable.empty());
     });
 
     test('returns infinite range if to is not passed', () {
-        expect(range().take(10), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+      expect(range().take(10), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
     });
 
     test('returns infinite range starting at "from" and step "step" if to is not passed', () {
-        expect(range(from: 4, step: 3).take(4), [4, 7, 10, 13]);
+      expect(range(from: 4, step: 3).take(4), [4, 7, 10, 13]);
     });
 
     test('throws ValueError when "to" is smaller than "from" and step is positive', () {
@@ -47,6 +47,42 @@ void main() {
 
     test('throws ValueError if step is 0', () {
       expect(() => range(from: 0, to: 10, step: 0), throwsA(isA<ValueError>()));
+    });
+  });
+
+  group('classify', () {
+    test('returns a list of lists', () {
+      expect([1, 3, 4, 5].classify([(x) => x > 2]), isA<List<List<int>>>());
+    });
+
+    test('puts elements at the group of the first classifier they pass when "multiple" is set to false', () {
+      final actual = [1, 2, 3, 4, 5, 6].classify([(x) => x < 3, (x) => x < 5]);
+      final expected = [
+        [1, 2],
+        [3, 4],
+        [5, 6]
+      ];
+      expect(actual, expected);
+    });
+
+    test('puts elements at the group of every classifier they pass when "multiple" is set to true', () {
+      final actual = [1, 2, 3, 4, 5, 6].classify([(x) => x < 3, (x) => x < 5], multiple: true);
+      final expected = [
+        [1, 2],
+        [1, 2, 3, 4],
+        [5, 6]
+      ];
+      expect(actual, expected);
+    });
+
+    test('works with any iterable', () {
+      final expected = [
+        [1, 2],
+        [3]
+      ];
+      expect([1, 2, 3].classify([(x) => x < 3]), expected);
+      expect(Iterable.generate(3, (i) => i + 1).classify([(x) => x < 3]), expected);
+      expect({1, 2, 3}.classify([(x) => x < 3]), expected);
     });
   });
 }
