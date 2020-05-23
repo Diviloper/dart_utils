@@ -31,7 +31,9 @@ void main() {
       cachedFib.call(33);
       timer.stop();
       final firstTime = timer.elapsed;
-      timer..reset()..start();
+      timer
+        ..reset()
+        ..start();
       cachedFib.call(33);
       timer.stop();
       final cachedTime = timer.elapsed;

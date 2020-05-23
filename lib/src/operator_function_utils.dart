@@ -34,7 +34,6 @@ extension IntOperators on int {
   static double invert(int first) => 1 / first;
 }
 
-
 extension DoubleOperators on double {
   static double add(double first, double second) => first + second;
 
