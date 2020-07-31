@@ -1,10 +1,9 @@
 import 'package:dart_utils/dart_utils.dart';
 
-int fib(int n) => n < 2 ? n : fib(n-2) + fib(n-1);
-
 void main() {
-  final memoized = CachedFunction(fib);
-  for (int i=1; i<50; ++i) {
-    print('fib($i): ${memoized(i)}');
-  }
+  final a = [1, 2, 3];
+  final b = [4, 5, 6];
+  print(a.reduce(add));
+  final c = b.reduce(subtract);
+  print(c.runtimeType);
 }
