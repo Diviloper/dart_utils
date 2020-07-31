@@ -26,6 +26,7 @@ void main() {
     });
 
     test('returns an empty iterator if "from" equals "to"', () {
+      expect(range(from: 15, to: 15), Iterable.empty());
       expect(range(to: 0), Iterable.empty());
     });
 
@@ -80,9 +81,10 @@ void main() {
         [1, 2],
         [3]
       ];
-      expect([1, 2, 3].classify([(x) => x < 3]), expected);
-      expect(Iterable.generate(3, (i) => i + 1).classify([(x) => x < 3]), expected);
-      expect({1, 2, 3}.classify([(x) => x < 3]), expected);
+      final classifiers = <bool Function(int)>[(x) => x < 3];
+      expect([1, 2, 3].classify(classifiers), expected);
+      expect(Iterable.generate(3, (i) => i + 1).classify(classifiers), expected);
+      expect({1, 2, 3}.classify(classifiers), expected);
     });
   });
 }
